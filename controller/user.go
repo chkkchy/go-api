@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
+	m "../model"
 	userService "../service"
 	"github.com/labstack/echo"
 )
@@ -25,7 +26,7 @@ func GetUser(c echo.Context) error {
 }
 
 func PostUser(c echo.Context) error {
-	u := new(userService.User)
+	u := new(m.User)
 	if err := c.Bind(u); err != nil {
 		return err
 	}
@@ -38,7 +39,7 @@ func PostUser(c echo.Context) error {
 func PutUser(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	u := new(userService.User)
+	u := new(m.User)
 	if err := c.Bind(u); err != nil {
 		return err
 	}
