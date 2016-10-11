@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
+	userService "../service"
 	"github.com/labstack/echo"
 )
 
@@ -13,23 +14,20 @@ type User struct {
 	Sex  bool   `json:"bool"` // false -> male, true -> female
 }
 
-var users map[int]User = map[int]User{
-	1: User{"yukichi", 26, false},
-	2: User{"mendy", 25, true},
-	3: User{"shibata", 28, false},
-}
-
 func GetUsers(c echo.Context) error {
-	_ := c.QueryParam("sex")
+	sex := c.QueryParam("sex")
 
-	ret := mToS(users)
+	ret := userService.FindUsers(sex)
+
 	return c.JSON(http.StatusOK, ret)
 }
 
 func GetUser(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	return c.JSON(http.StatusOK, users[id])
+	ret := userService.FindUser(id)
+
+	return c.JSON(http.StatusOK, ret)
 }
 
 func PostUser(c echo.Context) error {
@@ -38,9 +36,9 @@ func PostUser(c echo.Context) error {
 		return err
 	}
 
-	users[(len(users) + 1)] = *u
+	ret := userService.CreateUser(u)
 
-	return c.JSON(http.StatusCreated, u)
+	return c.JSON(http.StatusCreated, ret)
 }
 
 func PutUser(c echo.Context) error {
@@ -51,29 +49,15 @@ func PutUser(c echo.Context) error {
 		return err
 	}
 
-	user := users[id]
-	user.Name = u.Name
-	user.Age = u.Age
-	users[id] = user
+	ret := userService.UpdateUser(id, u.Name, u.Age)
 
-	return c.JSON(http.StatusOK, user)
+	return c.JSON(http.StatusOK, ret)
 }
 
 func DeleteUser(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	delete(users, id)
+	ret := userService.DeleteUser(id)
 
-	_, ok := users[id]
-	deleted := !ok
-
-	return c.JSON(http.StatusOK, deleted)
-}
-
-func mToS(m map[int]User) []User {
-	v := make([]User, 0, len(m))
-	for _, value := range m {
-		v = append(v, value)
-	}
-	return v
+	return c.JSON(http.StatusOK, ret)
 }
