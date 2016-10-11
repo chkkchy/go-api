@@ -1,7 +1,7 @@
 package main
 
 import (
-	"net/http"
+	"./controller"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
@@ -9,8 +9,15 @@ import (
 
 func main() {
 	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, world.")
-	})
+
+	// routing
+	e.GET("/users", user.GetUsers)
+	e.GET("/users/:id", user.GetUser)
+	e.POST("/users", user.PostUser)
+	e.PUT("/users/:id", user.PutUser)
+	e.DELETE("/users/:id", user.DeleteUser)
+
+	e.Static("/static", "static")
+
 	e.Run(standard.New(":1323"))
 }
