@@ -22,8 +22,8 @@ func FindUser(id int) User {
 	return users[id]
 }
 
-func CreateUser(user User) User {
-	users[(len(users) + 1)] = user
+func CreateUser(user *User) *User {
+	users[(len(users) + 1)] = *user
 	return user
 }
 

@@ -8,12 +8,6 @@ import (
 	"github.com/labstack/echo"
 )
 
-type User struct {
-	Name string `json:"name"`
-	Age  int    `json:"age"`
-	Sex  bool   `json:"bool"` // false -> male, true -> female
-}
-
 func GetUsers(c echo.Context) error {
 	sex := c.QueryParam("sex")
 
@@ -31,7 +25,7 @@ func GetUser(c echo.Context) error {
 }
 
 func PostUser(c echo.Context) error {
-	u := new(User)
+	u := new(userService.User)
 	if err := c.Bind(u); err != nil {
 		return err
 	}
@@ -44,7 +38,7 @@ func PostUser(c echo.Context) error {
 func PutUser(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	u := new(User)
+	u := new(userService.User)
 	if err := c.Bind(u); err != nil {
 		return err
 	}
