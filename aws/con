@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#ssh ec2-user@52.198.155.206
+ssh ec2-user@ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com
