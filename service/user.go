@@ -15,7 +15,7 @@ var users map[int]m.User = map[int]m.User{
 	3: m.User{"shibata", 28, false},
 }
 
-type User struct {
+type Users struct {
 	Id        int
 	Name      string
 	Age       int
@@ -36,11 +36,11 @@ func FindUser(id int) m.User {
 
 func CreateUser(user *m.User) *m.User {
 	users[(len(users) + 1)] = *user
-	engine, err := xorm.NewEngine("mysql", "testuser:testpass@ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com/testdb")
+	engine, err := xorm.NewEngine("mysql", "testuser:testpass@tcp(ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com:3306)/testdb")
 	if err != nil {
 		fmt.Println("e1: ", err)
 	}
-	u := &User{Name: user.Name, Age: user.Age, Sex: user.Sex}
+	u := &Users{Name: user.Name, Age: user.Age, Sex: user.Sex, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 	affected, err := engine.Insert(u)
 	if err != nil {
 		fmt.Println("e2: ", err)
