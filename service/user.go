@@ -1,73 +1,33 @@
 package user
 
 import (
-	"fmt"
-	"time"
-
+	userDao "../dao"
 	m "../model"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/xorm"
 )
-
-var users map[int]m.User = map[int]m.User{
-	1: m.User{"yukichi", 26, false},
-	2: m.User{"mendy", 25, true},
-	3: m.User{"shibata", 28, false},
-}
-
-type Users struct {
-	Id        int
-	Name      string
-	Age       int
-	Sex       bool
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
 
 func FindUsers(sex string) []m.User {
 	// TODO: filter by sex
-	ret := mToS(users)
-	return ret
+	res := userDao.FindAll(true)
+	return res
 }
 
 func FindUser(id int) m.User {
-	return users[id]
+	res := userDao.FindOne(id)
+	return res
 }
 
 func CreateUser(user *m.User) *m.User {
-	users[(len(users) + 1)] = *user
-	engine, err := xorm.NewEngine("mysql", "testuser:testpass@tcp(ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com:3306)/testdb")
-	if err != nil {
-		fmt.Println("e1: ", err)
-	}
-	u := &Users{Name: user.Name, Age: user.Age, Sex: user.Sex, CreatedAt: time.Now(), UpdatedAt: time.Now()}
-	affected, err := engine.Insert(u)
-	if err != nil {
-		fmt.Println("e2: ", err)
-	}
-	fmt.Println("affected: ", affected)
-	return user
+	res := userDao.Insert(user)
+	return res
 }
 
-func UpdateUser(id int, name string, age int) m.User {
-	user := users[id]
-	user.Name = name
-	user.Age = age
-	users[id] = user
-	return user
+func UpdateUser(id int, name string, age int) *m.User {
+	res := userDao.Update(id, name, age)
+	return res
 }
 
 func DeleteUser(id int) bool {
-	delete(users, id)
-	_, ok := users[id]
-	deleted := !ok
-	return deleted
-}
-
-func mToS(mp map[int]m.User) []m.User {
-	v := make([]m.User, 0, len(mp))
-	for _, value := range mp {
-		v = append(v, value)
-	}
-	return v
+	res := userDao.Delete(id)
+	return res
 }
