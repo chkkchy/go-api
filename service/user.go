@@ -1,11 +1,27 @@
 package user
 
-import m "../model"
+import (
+	"fmt"
+	"time"
+
+	m "../model"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/go-xorm/xorm"
+)
 
 var users map[int]m.User = map[int]m.User{
 	1: m.User{"yukichi", 26, false},
 	2: m.User{"mendy", 25, true},
 	3: m.User{"shibata", 28, false},
+}
+
+type User struct {
+	Id        int
+	Name      string
+	Age       int
+	Sex       bool
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 func FindUsers(sex string) []m.User {
@@ -20,6 +36,16 @@ func FindUser(id int) m.User {
 
 func CreateUser(user *m.User) *m.User {
 	users[(len(users) + 1)] = *user
+	engine, err := xorm.NewEngine("mysql", "testuser:testpass@ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com/testdb")
+	if err != nil {
+		fmt.Println("e1: ", err)
+	}
+	u := &User{Name: user.Name, Age: user.Age, Sex: user.Sex}
+	affected, err := engine.Insert(u)
+	if err != nil {
+		fmt.Println("e2: ", err)
+	}
+	fmt.Println("affected: ", affected)
 	return user
 }
 
