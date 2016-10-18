@@ -3,12 +3,14 @@ package main
 import (
 	"flag"
 
-	"./routes"
+	userService "./service/user"
 
 	"github.com/golang/glog"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 )
+
+var user userService.User
 
 func main() {
 
