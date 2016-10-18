@@ -18,7 +18,7 @@ func (s *User) findUsers(sex string) []User {
 	var users []User
 	for _, ent := range ents {
 		user := eToM(ent)
-		users = append(users, user)
+		users = append(users, *user)
 	}
 	return users
 }
@@ -26,19 +26,19 @@ func (s *User) findUsers(sex string) []User {
 func (s *User) findUser(id int) User {
 	ent := userDao.FindOne(id)
 	user := eToM(ent)
-	return user
+	return *user
 }
 
-func (s *User) createUser(u *User) *User {
+func (s *User) createUser(u *User) User {
 	ent := userDao.Insert(u.Name, u.Age, u.Sex)
-	user := eToM(*ent)
-	return &user
+	user := eToM(ent)
+	return *user
 }
 
-func (s *User) updateUser(id int, name string, age int) *User {
+func (s *User) updateUser(id int, name string, age int) User {
 	ent := userDao.Update(id, name, age)
-	user := eToM(*ent)
-	return &user
+	user := eToM(ent)
+	return *user
 }
 
 func (s *User) deleteUser(id int) bool {
@@ -46,8 +46,8 @@ func (s *User) deleteUser(id int) bool {
 	return res
 }
 
-func eToM(e userDao.Users) User {
-	m := User{}
+func eToM(e *userDao.Users) *User {
+	m := &User{}
 	m.Id = e.Id
 	m.Name = e.Name
 	m.Age = e.Age

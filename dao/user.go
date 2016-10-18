@@ -1,4 +1,4 @@
-package userdao
+package dao
 
 import (
 	"os"
@@ -47,11 +47,11 @@ func init() {
 	engine.SetMaxOpenConns(500) // 全体の総数
 }
 
-func FindAll(sex bool) []Users {
-	var ents []Users
+func FindAll(sex bool) []*Users {
+	var ents []*Users
 	err := engine.Iterate(&Users{}, func(idx int, bean interface{}) error {
 		ent := bean.(*Users)
-		ents = append(ents, *ent)
+		ents = append(ents, ent)
 		return nil
 	})
 	if err != nil {
@@ -60,10 +60,10 @@ func FindAll(sex bool) []Users {
 	return ents
 }
 
-func FindOne(id int) Users {
+func FindOne(id int) *Users {
 	ent := &Users{}
 	engine.Where("id = ?", id).Get(ent)
-	return *ent
+	return ent
 }
 
 func Insert(name string, age int, sex bool) *Users {
