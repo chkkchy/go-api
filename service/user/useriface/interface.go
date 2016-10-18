@@ -1,6 +1,10 @@
 package useriface
 
-import "github.com/labstack/echo"
+import (
+	"../../user"
+
+	"github.com/labstack/echo"
+)
 
 type UserAPI interface {
 	GetUsers(c echo.Context) error
@@ -10,4 +14,4 @@ type UserAPI interface {
 	DeleteUser(c echo.Context) error
 }
 
-// var _ UserAPI = (*user.User)(nil)
+var _ UserAPI = (*user.User)(nil)
