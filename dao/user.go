@@ -1,15 +1,16 @@
-package user
+package userdao
 
 import (
 	"os"
 	"time"
 
-	m "../model"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 	log "github.com/golang/glog"
 )
+
+// type Entity Users
 
 type Users struct {
 	Id        int
@@ -46,30 +47,28 @@ func init() {
 	engine.SetMaxOpenConns(500) // 全体の総数
 }
 
-func FindAll(sex bool) []m.User {
-	var us []m.User
+func FindAll(sex bool) []Users {
+	var ents []Users
 	err := engine.Iterate(&Users{}, func(idx int, bean interface{}) error {
-		e := bean.(*Users)
-		m := eToM(*e)
-		us = append(us, m)
+		ent := bean.(*Users)
+		ents = append(ents, *ent)
 		return nil
 	})
 	if err != nil {
 		log.Error(err.Error())
 	}
-	return us
+	return ents
 }
 
-func FindOne(id int) m.User {
-	u := &Users{}
-	engine.Where("id = ?", id).Get(u)
-	ret := eToM(*u)
-	return ret
+func FindOne(id int) Users {
+	ent := &Users{}
+	engine.Where("id = ?", id).Get(ent)
+	return *ent
 }
 
-func Insert(user *m.User) *m.User {
-	u := &Users{Name: user.Name, Age: user.Age, Sex: user.Sex, CreatedAt: time.Now(), UpdatedAt: time.Now()}
-	affected, err := engine.Insert(u)
+func Insert(name string, age int, sex bool) *Users {
+	ent := &Users{Name: name, Age: age, Sex: sex, CreatedAt: time.Now(), UpdatedAt: time.Now()}
+	affected, err := engine.Insert(ent)
 	if err != nil {
 		log.Error(err.Error())
 		return nil
@@ -79,12 +78,12 @@ func Insert(user *m.User) *m.User {
 		return nil
 	}
 	// TODO: set created user's id
-	return user
+	return ent
 }
 
-func Update(id int, name string, age int) *m.User {
-	u := &Users{Name: name, Age: age}
-	affected, err := engine.Where("id =?", id).Update(u)
+func Update(id int, name string, age int) *Users {
+	ent := &Users{Name: name, Age: age}
+	affected, err := engine.Where("id =?", id).Update(ent)
 	if err != nil {
 		log.Error(err.Error())
 		return nil
@@ -93,9 +92,8 @@ func Update(id int, name string, age int) *m.User {
 		log.Info("nothing affected")
 		return nil
 	}
-	engine.Where("id = ?", id).Get(u)
-	ret := eToM(*u)
-	return &ret
+	engine.Where("id = ?", id).Get(ent)
+	return ent
 }
 
 func Delete(id int) bool {
@@ -104,13 +102,4 @@ func Delete(id int) bool {
 		log.Error(err.Error())
 	}
 	return affected > 0
-}
-
-func eToM(e Users) m.User {
-	m := m.User{}
-	m.Id = e.Id
-	m.Name = e.Name
-	m.Age = e.Age
-	m.Sex = e.Sex
-	return m
 }

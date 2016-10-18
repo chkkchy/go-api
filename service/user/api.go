@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"strconv"
 
-	m "../../model"
 	"github.com/labstack/echo"
 )
 
@@ -28,7 +27,7 @@ func (_u *User) GetUser(c echo.Context) error {
 }
 
 func (_u *User) PostUser(c echo.Context) error {
-	u := new(m.User)
+	u := new(User)
 	if err := c.Bind(u); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
@@ -44,7 +43,7 @@ func (_u *User) PutUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	u := new(m.User)
+	u := new(User)
 	if err := c.Bind(u); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
