@@ -18,7 +18,10 @@ func GetUsers(c echo.Context) error {
 }
 
 func GetUser(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
 
 	ret := userService.FindUser(id)
 
@@ -28,7 +31,7 @@ func GetUser(c echo.Context) error {
 func PostUser(c echo.Context) error {
 	u := new(m.User)
 	if err := c.Bind(u); err != nil {
-		return err
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	ret := userService.CreateUser(u)
@@ -37,11 +40,14 @@ func PostUser(c echo.Context) error {
 }
 
 func PutUser(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
 
 	u := new(m.User)
 	if err := c.Bind(u); err != nil {
-		return err
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	ret := userService.UpdateUser(id, u.Name, u.Age)
@@ -50,9 +56,12 @@ func PutUser(c echo.Context) error {
 }
 
 func DeleteUser(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
 
 	ret := userService.DeleteUser(id)
 
-	return c.JSON(http.StatusOK, ret)
+	return c.JSON(http.StatusNoContent, ret)
 }

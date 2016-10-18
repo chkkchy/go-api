@@ -1,13 +1,21 @@
 package main
 
 import (
+	"flag"
+
 	"./routes"
 
+	"github.com/golang/glog"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 )
 
 func main() {
+
+	// logger
+	flag.Parse()
+	defer glog.Flush()
+
 	e := echo.New()
 
 	// routing
@@ -20,4 +28,5 @@ func main() {
 	e.Static("/static", "static")
 
 	e.Run(standard.New(":1323"))
+
 }

@@ -1,7 +1,6 @@
 package user
 
 import (
-	"fmt"
 	"os"
 	"time"
 
@@ -9,6 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
+	log "github.com/golang/glog"
 )
 
 type Users struct {
@@ -27,15 +27,14 @@ func init() {
 	var err error
 	engine, err = xorm.NewEngine("mysql", "testuser:testpass@tcp(ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com:3306)/testdb")
 	if err != nil {
-		println(err.Error())
-		panic(err)
+		log.Error(err.Error())
 	}
-	_ = engine.Sync2(new(Users))
+	// _ = engine.Sync2(new(Users))
 
 	// Logs
 	f, err := os.Create("logs/sql.log")
 	if err != nil {
-		println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 	engine.ShowSQL(true)
@@ -56,7 +55,7 @@ func FindAll(sex bool) []m.User {
 		return nil
 	})
 	if err != nil {
-		println(err.Error())
+		log.Error(err.Error())
 	}
 	return us
 }
@@ -72,11 +71,11 @@ func Insert(user *m.User) *m.User {
 	u := &Users{Name: user.Name, Age: user.Age, Sex: user.Sex, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 	affected, err := engine.Insert(u)
 	if err != nil {
-		println(err.Error())
+		log.Error(err.Error())
 		return nil
 	}
 	if affected == 0 {
-		fmt.Println("nothing affected")
+		log.Info("nothing affected")
 		return nil
 	}
 	// TODO: set created user's id
@@ -87,11 +86,11 @@ func Update(id int, name string, age int) *m.User {
 	u := &Users{Name: name, Age: age}
 	affected, err := engine.Where("id =?", id).Update(u)
 	if err != nil {
-		println(err.Error())
+		log.Error(err.Error())
 		return nil
 	}
 	if affected == 0 {
-		fmt.Println("nothing affected")
+		log.Info("nothing affected")
 		return nil
 	}
 	engine.Where("id = ?", id).Get(u)
@@ -102,7 +101,7 @@ func Update(id int, name string, age int) *m.User {
 func Delete(id int) bool {
 	affected, err := engine.Where("id = ?", id).Delete(&Users{})
 	if err != nil {
-		println(err.Error())
+		log.Error(err.Error())
 	}
 	return affected > 0
 }
