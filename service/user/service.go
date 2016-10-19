@@ -12,7 +12,10 @@ type User struct {
 	Sex  bool   `json:"sex"` // false -> female, true -> male
 }
 
-func (s *User) findUsers(sex string) []User {
+type Service struct {
+}
+
+func (s *Service) findUsers(sex string) []User {
 	// TODO: filter by sex
 	ents := userDao.FindAll(true)
 	var users []User
@@ -23,25 +26,25 @@ func (s *User) findUsers(sex string) []User {
 	return users
 }
 
-func (s *User) findUser(id int) User {
+func (s *Service) findUser(id int) User {
 	ent := userDao.FindOne(id)
 	user := eToM(ent)
 	return *user
 }
 
-func (s *User) createUser(u *User) User {
+func (s *Service) createUser(u *User) User {
 	ent := userDao.Insert(u.Name, u.Age, u.Sex)
 	user := eToM(ent)
 	return *user
 }
 
-func (s *User) updateUser(id int, name string, age int) User {
+func (s *Service) updateUser(id int, name string, age int) User {
 	ent := userDao.Update(id, name, age)
 	user := eToM(ent)
 	return *user
 }
 
-func (s *User) deleteUser(id int) bool {
+func (s *Service) deleteUser(id int) bool {
 	res := userDao.Delete(id)
 	return res
 }
