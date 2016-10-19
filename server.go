@@ -3,8 +3,7 @@ package main
 import (
 	"flag"
 
-	"./service/user"
-
+	"./controller"
 	"github.com/golang/glog"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
@@ -19,11 +18,11 @@ func main() {
 	e := echo.New()
 
 	// routing
-	e.GET("/users", user.Api.GetUsers)
-	e.GET("/users/:id", user.Api.GetUser)
-	e.POST("/users", user.Api.PostUser)
-	e.PUT("/users/:id", user.Api.PutUser)
-	e.DELETE("/users/:id", user.Api.DeleteUser)
+	e.GET("/users", controller.GetUsers)
+	e.GET("/users/:id", controller.GetUser)
+	e.POST("/users", controller.PostUser)
+	e.PUT("/users/:id", controller.PutUser)
+	e.DELETE("/users/:id", controller.DeleteUser)
 
 	e.Static("/static", "static")
 

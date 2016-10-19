@@ -1,13 +1,14 @@
 package useriface
 
-import "github.com/labstack/echo"
+import "../../user"
 
 type UserAPI interface {
-	GetUsers(c echo.Context) error
-	GetUser(c echo.Context) error
-	PostUser(c echo.Context) error
-	PutUser(c echo.Context) error
-	DeleteUser(c echo.Context) error
+	GetUsers(input *user.GetUsersInput) (output *user.UserOutputList)
+	GetUser(id int) (output *user.UserOutput)
+	CreateUser(input *user.CreateUserInput) (output *user.UserOutput)
+	UpdateUser(input *user.UpdateUserInput) (output *user.UserOutput)
+	DeleteUser(id int) (output bool)
+	test()
 }
 
-// var _ UserAPI = (*user.Service)(nil)
+var _ UserAPI = (*user.Service)(nil)
