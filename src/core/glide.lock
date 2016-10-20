@@ -1,8 +1,8 @@
-hash: f2cb32fecdb06bda3d88795c4c733da1e4a60a82e1b2bd995dfd4eae9283c0ed
-updated: 2016-10-20T15:13:10.436674158+09:00
+hash: 4931417b509ecf7d2f034128174cc6c246e0fda1cdfa648b0e068f2e5df73d3f
+updated: 2016-10-20T20:01:13.959492574+09:00
 imports:
 - name: github.com/go-sql-driver/mysql
-  version: 0b58b37b664c21f3010e836f1b931e1d0b0b0685
+  version: 127a48c554cd8f89377af10729d13b314e084ea5
 - name: github.com/go-xorm/builder
   version: 4b36d792f2a6cb00de962eeeb19d82bb54c1e4a4
 - name: github.com/go-xorm/core
@@ -11,4 +11,14 @@ imports:
   version: 5293f702b97cded99962359d01fbbb4cad481fbc
 - name: github.com/golang/glog
   version: 23def4e6c14b4da8ac2ed8007337bc5eb5007998
+- name: gopkg.in/bsm/ratelimit.v1
+  version: db14e161995a5177acef654cb0dd785e8ee8bc22
+- name: gopkg.in/redis.v5
+  version: 6f8957c5b7dece15d1ea5f592ec88f46ee2deffa
+  subpackages:
+  - internal
+  - internal/consistenthash
+  - internal/hashtag
+  - internal/pool
+  - internal/proto
 devImports: []
