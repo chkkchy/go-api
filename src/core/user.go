@@ -1,17 +1,17 @@
-package user
+package core
 
 import (
 	"time"
 
-	userDao "api/dao"
+	userdao "core/dao/user"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func (s *Service) GetUsers(input *GetUsersInput) (output *UserOutputList) {
+func GetUsers(input *GetUsersInput) (output *UserOutputList) {
 	output = &UserOutputList{}
 	// TODO: filter by sex
-	ents := userDao.FindAll(true)
+	ents := userdao.FindAll(true)
 	for _, ent := range ents {
 		user := eToM(ent)
 		output.List = append(output.List, user)
@@ -19,30 +19,30 @@ func (s *Service) GetUsers(input *GetUsersInput) (output *UserOutputList) {
 	return
 }
 
-func (s *Service) GetUser(id int) (output *UserOutput) {
-	ent := userDao.FindOne(id)
+func GetUser(id int) (output *UserOutput) {
+	ent := userdao.FindOne(id)
 	output = eToM(ent)
 	return
 }
 
-func (s *Service) CreateUser(input *CreateUserInput) (output *UserOutput) {
-	ent := userDao.Insert(input.Name, input.Age, input.Sex)
+func CreateUser(input *CreateUserInput) (output *UserOutput) {
+	ent := userdao.Insert(input.Name, input.Age, input.Sex)
 	output = eToM(ent)
 	return
 }
 
-func (s *Service) UpdateUser(input *UpdateUserInput) (output *UserOutput) {
-	ent := userDao.Update(input.Id, input.Name, input.Age)
+func UpdateUser(input *UpdateUserInput) (output *UserOutput) {
+	ent := userdao.Update(input.Id, input.Name, input.Age)
 	output = eToM(ent)
 	return
 }
 
-func (s *Service) DeleteUser(id int) (output bool) {
-	output = userDao.Delete(id)
+func DeleteUser(id int) (output bool) {
+	output = userdao.Delete(id)
 	return
 }
 
-func eToM(e *userDao.Users) (m *UserOutput) {
+func eToM(e *userdao.Users) (m *UserOutput) {
 	m = &UserOutput{}
 	m.Id = e.Id
 	m.Name = e.Name

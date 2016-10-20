@@ -4,17 +4,15 @@ import (
 	"net/http"
 	"strconv"
 
-	"api/service/user"
+	"core"
 
 	"github.com/labstack/echo"
 )
 
-var service *user.Service = user.New()
-
 func GetUsers(c echo.Context) error {
 	sex := c.QueryParam("sex") == "male"
-	req := &user.GetUsersInput{Sex: sex}
-	res := service.GetUsers(req)
+	req := &core.GetUsersInput{Sex: sex}
+	res := core.GetUsers(req)
 	return c.JSON(http.StatusOK, res)
 }
 
@@ -23,16 +21,16 @@ func GetUser(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	res := service.GetUser(id)
+	res := core.GetUser(id)
 	return c.JSON(http.StatusOK, res)
 }
 
 func PostUser(c echo.Context) error {
-	req := new(user.CreateUserInput)
+	req := new(core.CreateUserInput)
 	if err := c.Bind(req); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	res := service.CreateUser(req)
+	res := core.CreateUser(req)
 	return c.JSON(http.StatusCreated, res)
 }
 
@@ -41,12 +39,12 @@ func PutUser(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	req := new(user.UpdateUserInput)
+	req := new(core.UpdateUserInput)
 	if err := c.Bind(req); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 	req.Id = id
-	res := service.UpdateUser(req)
+	res := core.UpdateUser(req)
 	return c.JSON(http.StatusOK, res)
 }
 
@@ -55,6 +53,6 @@ func DeleteUser(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	res := service.DeleteUser(id)
+	res := core.DeleteUser(id)
 	return c.JSON(http.StatusNoContent, res)
 }

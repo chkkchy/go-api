@@ -1,4 +1,4 @@
 package: .
 import:
-- package: github.com/labstack/echo
+- package: github.com/go-xorm/xorm
 - package: github.com/golang/glog
