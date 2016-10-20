@@ -1,0 +1,8 @@
+---
+- hosts: ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com
+  sudo: yes
+  tasks:
+    - name: install redis
+      yum: name=redis enablerepo=epel
+    - name: start redis
+      service: name=redis state=restarted enabled=yes
