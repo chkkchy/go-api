@@ -1,10 +1,11 @@
-hash: 10df28133ac441c01daa3a50c2e12f3d3860fab898f0388f6aa4b32cc7b9eb5c
-updated: 2016-10-20T17:18:51.480657868+09:00
+hash: b3e494ab29a9046a1e952df1f5861d1aa7c5a23f34e0952b6f5a3965261cd528
+updated: 2016-10-20T18:10:05.359051462+09:00
 imports:
 - name: github.com/garyburd/redigo
   version: ffa8d46ada782d81cfda81a0fbd9f45ceae448e8
   subpackages:
   - redis
+  - internal
 - name: github.com/go-sql-driver/mysql
   version: 127a48c554cd8f89377af10729d13b314e084ea5
 - name: github.com/go-xorm/builder
@@ -15,4 +16,14 @@ imports:
   version: 5293f702b97cded99962359d01fbbb4cad481fbc
 - name: github.com/golang/glog
   version: 23def4e6c14b4da8ac2ed8007337bc5eb5007998
+- name: gopkg.in/bsm/ratelimit.v1
+  version: db14e161995a5177acef654cb0dd785e8ee8bc22
+- name: gopkg.in/redis.v5
+  version: 6f8957c5b7dece15d1ea5f592ec88f46ee2deffa
+  subpackages:
+  - internal
+  - internal/consistenthash
+  - internal/hashtag
+  - internal/pool
+  - internal/proto
 devImports: []

@@ -1,4 +1,4 @@
-package user
+package test
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 
 func init() {
 
-	fmt.Println("redis init")
+	fmt.Println("redigo init")
 
 	c, err := redis.Dial("tcp", "ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com:6379")
 	if err != nil {
@@ -22,8 +22,8 @@ func init() {
 	// Connection close
 	defer c.Close()
 
-	const key = "hoge"
-	const val = "fugo"
+	const key = "keyredigo"
+	const val = "valredigo"
 
 	// Set
 	c.Do("SET", key, val)
