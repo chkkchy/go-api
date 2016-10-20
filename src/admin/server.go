@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	_ "core/cache/test"
-
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 )
