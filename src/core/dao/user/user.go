@@ -1,4 +1,4 @@
-package dao
+package user
 
 import (
 	"os"
@@ -7,7 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
-	log "github.com/golang/glog"
+	// log "github.com/golang/glog"
 )
 
 // type Entity Users
@@ -28,14 +28,14 @@ func init() {
 	var err error
 	engine, err = xorm.NewEngine("mysql", "testuser:testpass@tcp(ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com:3306)/testdb")
 	if err != nil {
-		log.Error(err.Error())
+		// log.Error(err.Error())
 	}
 	// _ = engine.Sync2(new(Users))
 
 	// Logs
-	f, err := os.Create("logs/sql.log")
+	f, err := os.Create("src/api/logs/sql.log")
 	if err != nil {
-		log.Error(err.Error())
+		// log.Error(err.Error())
 		return
 	}
 	engine.ShowSQL(true)
@@ -55,7 +55,7 @@ func FindAll(sex bool) []*Users {
 		return nil
 	})
 	if err != nil {
-		log.Error(err.Error())
+		// log.Error(err.Error())
 	}
 	return ents
 }
@@ -70,11 +70,11 @@ func Insert(name string, age int, sex bool) *Users {
 	ent := &Users{Name: name, Age: age, Sex: sex, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 	affected, err := engine.Insert(ent)
 	if err != nil {
-		log.Error(err.Error())
+		// log.Error(err.Error())
 		return nil
 	}
 	if affected == 0 {
-		log.Info("nothing affected")
+		// log.Info("nothing affected")
 		return nil
 	}
 	// TODO: set created user's id
@@ -85,11 +85,11 @@ func Update(id int, name string, age int) *Users {
 	ent := &Users{Name: name, Age: age}
 	affected, err := engine.Where("id =?", id).Update(ent)
 	if err != nil {
-		log.Error(err.Error())
+		// log.Error(err.Error())
 		return nil
 	}
 	if affected == 0 {
-		log.Info("nothing affected")
+		// log.Info("nothing affected")
 		return nil
 	}
 	engine.Where("id = ?", id).Get(ent)
@@ -99,7 +99,7 @@ func Update(id int, name string, age int) *Users {
 func Delete(id int) bool {
 	affected, err := engine.Where("id = ?", id).Delete(&Users{})
 	if err != nil {
-		log.Error(err.Error())
+		// log.Error(err.Error())
 	}
 	return affected > 0
 }

@@ -1,6 +1,5 @@
 ---
 - hosts: ec2-52-198-155-206.ap-northeast-1.compute.amazonaws.com
-  #user: ec2-user
   sudo: yes
   vars:
     mysql_url: http://dev.mysql.com/get/Downloads/MySQL-5.6

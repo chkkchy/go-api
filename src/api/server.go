@@ -3,7 +3,8 @@ package main
 import (
 	"flag"
 
-	"./controller"
+	"api/controller"
+
 	"github.com/golang/glog"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"

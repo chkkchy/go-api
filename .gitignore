@@ -6,8 +6,10 @@
 # Folders
 _obj
 _test
-vendor
+bin
+pkg
 logs
+vendor
 
 # Architecture specific extensions/prefixes
 *.[568vq]
