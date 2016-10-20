@@ -33,7 +33,7 @@ func init() {
 	// _ = engine.Sync2(new(Users))
 
 	// Logs
-	f, err := os.Create("logs/sql.log")
+	f, err := os.Create("src/api/logs/sql.log")
 	if err != nil {
 		log.Error(err.Error())
 		return

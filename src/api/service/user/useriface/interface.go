@@ -1,6 +1,6 @@
 package useriface
 
-import "../../user"
+import "api/service/user"
 
 type UserAPI interface {
 	GetUsers(input *user.GetUsersInput) (output *user.UserOutputList)

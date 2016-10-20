@@ -4,7 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"../service/user"
+	"api/service/user"
+
 	"github.com/labstack/echo"
 )
 

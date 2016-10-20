@@ -3,7 +3,8 @@ package user
 import (
 	"time"
 
-	userDao "../../dao"
+	userDao "api/dao"
+
 	_ "github.com/go-sql-driver/mysql"
 )
 
