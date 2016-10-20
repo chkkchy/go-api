@@ -1,8 +1,12 @@
-hash: f2cb32fecdb06bda3d88795c4c733da1e4a60a82e1b2bd995dfd4eae9283c0ed
-updated: 2016-10-20T15:13:10.436674158+09:00
+hash: 10df28133ac441c01daa3a50c2e12f3d3860fab898f0388f6aa4b32cc7b9eb5c
+updated: 2016-10-20T17:18:51.480657868+09:00
 imports:
+- name: github.com/garyburd/redigo
+  version: ffa8d46ada782d81cfda81a0fbd9f45ceae448e8
+  subpackages:
+  - redis
 - name: github.com/go-sql-driver/mysql
-  version: 0b58b37b664c21f3010e836f1b931e1d0b0b0685
+  version: 127a48c554cd8f89377af10729d13b314e084ea5
 - name: github.com/go-xorm/builder
   version: 4b36d792f2a6cb00de962eeeb19d82bb54c1e4a4
 - name: github.com/go-xorm/core
