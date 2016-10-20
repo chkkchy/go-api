@@ -1,4 +1,4 @@
-package core
+package v1
 
 import (
 	"time"

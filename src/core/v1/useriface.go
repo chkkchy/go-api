@@ -1,4 +1,4 @@
-package core
+package v1
 
 type User interface {
 	GetUsers(input *GetUsersInput) (output *UserOutputList)

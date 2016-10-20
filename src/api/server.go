@@ -15,7 +15,6 @@ func main() {
 	// logger
 	flag.Parse()
 	defer glog.Flush()
-	glog.Info("hig")
 
 	e := echo.New()
 
