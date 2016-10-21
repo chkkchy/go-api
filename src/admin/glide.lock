@@ -1,8 +1,8 @@
 hash: 22b011cc8b02f5f43fa44b0d969b6776d1e98a652484254ab72094967188eaad
-updated: 2016-10-20T15:23:03.210641614+09:00
+updated: 2016-10-21T13:16:25.341704724+09:00
 imports:
 - name: github.com/labstack/echo
-  version: 1dcb7ba9ab8030aeb23e6e4d893a3efe0dc3d7a7
+  version: 7899588eff4831c0f07c50b6fe2fef43775715c5
   subpackages:
   - engine/standard
   - context
@@ -20,7 +20,7 @@ imports:
 - name: github.com/valyala/fasttemplate
   version: 3b874956e03f1636d171bda64b130f9135f42cff
 - name: golang.org/x/net
-  version: 3bafa3320efdf0c95d056586aa9abdd05ad72ee1
+  version: daba796358cd2742b75aae05761f1b898c9f6a5c
   subpackages:
   - context
 - name: golang.org/x/sys
