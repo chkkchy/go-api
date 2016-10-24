@@ -2,8 +2,6 @@ package dao
 
 import "time"
 
-// log "github.com/golang/glog"
-
 // type Entity Users
 
 type Users struct {
@@ -14,6 +12,12 @@ type Users struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+// func init() {
+// 	if err := engine.Sync2(new(Users)); err != nil {
+// 		log.Fatal(err.Error())
+// 	}
+// }
 
 func FindUsers(sex bool) []*Users {
 	var ents []*Users

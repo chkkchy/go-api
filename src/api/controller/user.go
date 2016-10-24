@@ -9,14 +9,14 @@ import (
 	"github.com/labstack/echo"
 )
 
-func GetUsers(c echo.Context) error {
+func getUsers(c echo.Context) error {
 	sex := c.QueryParam("sex") == "male"
 	req := &v1.GetUsersInput{Sex: sex}
 	res := v1.GetUsers(req)
 	return c.JSON(http.StatusOK, res)
 }
 
-func GetUser(c echo.Context) error {
+func getUser(c echo.Context) error {
 	// var ha string = c.Request().Header().Get("Accept")
 	// glog.Info("header[accept]", ha)
 	id, err := strconv.Atoi(c.Param("id"))
@@ -27,7 +27,7 @@ func GetUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-func PostUser(c echo.Context) error {
+func postUser(c echo.Context) error {
 	req := new(v1.CreateUserInput)
 	if err := c.Bind(req); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
@@ -36,7 +36,7 @@ func PostUser(c echo.Context) error {
 	return c.JSON(http.StatusCreated, res)
 }
 
-func PutUser(c echo.Context) error {
+func putUser(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
@@ -50,7 +50,7 @@ func PutUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-func DeleteUser(c echo.Context) error {
+func deleteUser(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
