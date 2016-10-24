@@ -3,15 +3,13 @@ package v1
 import (
 	"time"
 
-	userdao "core/dao/user"
-
-	_ "github.com/go-sql-driver/mysql"
+	"core/dao"
 )
 
 func GetUsers(input *GetUsersInput) (output *UserOutputList) {
 	output = &UserOutputList{}
 	// TODO: filter by sex
-	ents := userdao.FindAll(true)
+	ents := dao.FindUsers(true)
 	for _, ent := range ents {
 		user := eToM(ent)
 		output.List = append(output.List, user)
@@ -20,29 +18,29 @@ func GetUsers(input *GetUsersInput) (output *UserOutputList) {
 }
 
 func GetUser(id int) (output *UserOutput) {
-	ent := userdao.FindOne(id)
+	ent := dao.FindUser(id)
 	output = eToM(ent)
 	return
 }
 
 func CreateUser(input *CreateUserInput) (output *UserOutput) {
-	ent := userdao.Insert(input.Name, input.Age, input.Sex)
+	ent := dao.InsertUser(input.Name, input.Age, input.Sex)
 	output = eToM(ent)
 	return
 }
 
 func UpdateUser(input *UpdateUserInput) (output *UserOutput) {
-	ent := userdao.Update(input.Id, input.Name, input.Age)
+	ent := dao.UpdateUser(input.Id, input.Name, input.Age)
 	output = eToM(ent)
 	return
 }
 
 func DeleteUser(id int) (output bool) {
-	output = userdao.Delete(id)
+	output = dao.DeleteUser(id)
 	return
 }
 
-func eToM(e *userdao.Users) (m *UserOutput) {
+func eToM(e *dao.Users) (m *UserOutput) {
 	m = &UserOutput{}
 	m.Id = e.Id
 	m.Name = e.Name
