@@ -9,11 +9,12 @@ func Init() {
 	e := echo.New()
 
 	// routing
-	e.GET("/users", getUsers)
-	e.GET("/users/:id", getUser)
-	e.POST("/users", postUser)
-	e.PUT("/users/:id", putUser)
-	e.DELETE("/users/:id", deleteUser)
+	users := e.Group("/users")
+	users.GET("", getUsers)
+	users.GET("/:id", getUser)
+	users.POST("", postUser)
+	users.PUT("/:id", putUser)
+	users.DELETE("/:id", deleteUser)
 
 	e.Static("/static", "static")
 

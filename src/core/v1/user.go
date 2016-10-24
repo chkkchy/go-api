@@ -1,9 +1,8 @@
 package v1
 
 import (
-	"time"
-
 	"core/dao"
+	"time"
 )
 
 func GetUsers(input *GetUsersInput) (output *UserOutputList) {

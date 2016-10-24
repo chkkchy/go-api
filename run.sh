@@ -5,5 +5,5 @@ if [ -z $1 ]; then
     exit 1
 fi
 
-go run src/$1/server.go -alsologtostderr -log_dir=./logs
+go run src/$1/server.go -alsologtostderr -log_dir=./src/$1/logs
 

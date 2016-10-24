@@ -1,6 +1,10 @@
 package dao
 
-import "time"
+import (
+	"time"
+
+	log "github.com/golang/glog"
+)
 
 // type Entity Users
 
@@ -27,7 +31,7 @@ func FindUsers(sex bool) []*Users {
 		return nil
 	})
 	if err != nil {
-		// log.Error(err.Error())
+		log.Error(err.Error())
 	}
 	return ents
 }
@@ -42,11 +46,11 @@ func InsertUser(name string, age int, sex bool) *Users {
 	ent := &Users{Name: name, Age: age, Sex: sex, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 	affected, err := engine.Insert(ent)
 	if err != nil {
-		// log.Error(err.Error())
+		log.Error(err.Error())
 		return nil
 	}
 	if affected == 0 {
-		// log.Info("nothing affected")
+		log.Info("nothing affected")
 		return nil
 	}
 	// TODO: set created user's id
@@ -57,11 +61,11 @@ func UpdateUser(id int, name string, age int) *Users {
 	ent := &Users{Name: name, Age: age}
 	affected, err := engine.Where("id =?", id).Update(ent)
 	if err != nil {
-		// log.Error(err.Error())
+		log.Error(err.Error())
 		return nil
 	}
 	if affected == 0 {
-		// log.Info("nothing affected")
+		log.Info("nothing affected")
 		return nil
 	}
 	engine.Where("id = ?", id).Get(ent)
@@ -71,7 +75,7 @@ func UpdateUser(id int, name string, age int) *Users {
 func DeleteUser(id int) bool {
 	affected, err := engine.Where("id = ?", id).Delete(&Users{})
 	if err != nil {
-		// log.Error(err.Error())
+		log.Error(err.Error())
 	}
 	return affected > 0
 }
