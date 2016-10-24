@@ -1,0 +1,5 @@
+package: .
+import:
+- package: github.com/go-xorm/xorm
+- package: github.com/golang/glog
+- package: gopkg.in/redis.v5
